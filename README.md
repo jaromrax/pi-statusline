@@ -1,287 +1,209 @@
-# 🧩 Pi Extensions for the Pi Coding Agent
+# ✨ pi-statusline — Add a Ready-to-Use Powerline Footer to Pi
 
-[![npm scope](https://img.shields.io/badge/npm-@narumitw-blue)](https://www.npmjs.com/org/narumitw) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@narumitw/pi-statusline)](https://www.npmjs.com/package/@narumitw/pi-statusline) [![Pi extension](https://img.shields.io/badge/Pi-extension-blue)](https://pi.dev) [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-Independently installable [Pi Coding Agent](https://pi.dev) extensions and reusable extension
-libraries for coding, research, browser automation, workflow management, observability, and terminal
-ergonomics.
+Add a Powerline-style footer that works without setup and keeps important Pi, workspace, Git, usage, and time context visible as the terminal narrows.
 
-Install only what you need.
-Published packages use the `@narumitw` npm scope, and package READMEs identify source-only exceptions.
+A representative uncolored layout:
 
-## 🚀 Quick start
-
-Install an extension permanently:
-
-```bash
-pi install npm:@narumitw/pi-goal
+```text
+░▒▓ 🤖 sonnet-4 🧠 high 📁 pi-extensions 🌿 main ~2 🪟 ctx 42.0%/200k 🕒 16:42
 ```
 
-Try one without adding it permanently:
+## ✨ Features
+
+- Works immediately with a balanced default for model, thinking, workspace, Git, context, activity, and time.
+- Removes lower-priority segments before important information is clipped.
+- Shows when Pi is waiting for an extension UI prompt, streaming, or running tools.
+- Adds optional token, prompt-cache, provider usage, and cost details.
+- Offers three information levels, seven previewable palettes, and advanced custom layouts.
+- Uses ANSI-256 palette colors when Pi's effective terminal capabilities disable true color.
+- Loads a generated split runtime to reduce Pi package startup work.
+
+> **Need more customization?**
+> See [`pi-starship`](https://github.com/narumiruna/pi-extensions/tree/main/packages/pi-starship) ([npm](https://www.npmjs.com/package/@narumitw/pi-starship)).
+> It uses [Starship-inspired](https://starship.rs/) TOML and style syntax for deeper control over layout, modules, and colors.
+> Choose `pi-statusline` for practical defaults and quick setup.
+
+## 📦 Install
+
+```bash
+pi install npm:@narumitw/pi-statusline
+```
+
+Try the published package without installing it permanently:
 
 ```bash
 pi -e npm:@narumitw/pi-statusline
 ```
 
-Combine multiple extensions:
+Build the generated runtime and try the local package from this repository:
 
 ```bash
-pi -e npm:@narumitw/pi-goal \
-  -e npm:@narumitw/pi-statusline \
-  -e npm:@narumitw/pi-lsp
+npm --workspace @narumitw/pi-statusline run build
+pi -e ./packages/pi-statusline
 ```
 
-> [!IMPORTANT]
-> Pi extensions run with your full user permissions. Review an extension before installing it from any third party.
+The package declares `dist/index.ts`, so build an unbuilt local checkout before Pi loads the package directory.
+Install only from sources you trust because Pi extensions run with Pi's permissions.
 
-## ⭐ Extensions I use every day
+## 🚀 Quick start
 
-These extensions are part of my daily Pi setup:
+Install the extension and start Pi to use the balanced default immediately.
+Run `/statusline` to preview and apply an appearance or information level.
 
-| Extension | Why I use it |
+## 🎛️ Menu and information levels
+
+```text
+Appearance (tokyo-night)
+Information (balanced)
+Advanced
+Status
+Help
+```
+
+| Menu item | What it does |
 | --- | --- |
-| [`pi-btw`](./packages/pi-btw) | Ask a quick side question without polluting the main context. |
-| [`pi-accounts`](./packages/pi-accounts) | Switch between named subscription OAuth accounts. |
-| [`pi-caffeinate`](./packages/pi-caffeinate) | Keep my machine awake so Pi can keep working. |
-| [`pi-codex-compact`](./packages/pi-codex-compact) | Spend a little more for better compaction quality. |
-| [`pi-stamp`](./packages/pi-stamp) | See useful details for each response, such as its timestamp. |
-| [`pi-starship`](./packages/pi-starship) | Match Pi's footer to my Starship shell setup. |
-| [`pi-sync`](./packages/pi-sync) | Sync my Pi configuration across all my devices through S3. |
-| [`pi-usage`](./packages/pi-usage) | Check my Codex usage and limit reset times without opening Codex. |
+| **Appearance** | Preview palettes with Up/Down; Enter applies and Escape cancels |
+| **Information** | Preview and apply a curated segment set |
+| **Advanced** | Open Custom layout or Edit settings JSON |
+| **Status** | Show the effective source, path, appearance, layout, and diagnostics |
+| **Help** | Show command and schema guidance |
 
-## 📦 Choose an extension
+### Information levels
 
-### Coding and delegation
+Selecting a level replaces only `segments` and preserves unrelated JSON fields.
 
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-codex-compact`](./packages/pi-codex-compact) | Use OpenAI Codex Remote Compaction V2 to persist and replay bounded opaque checkpoints, with `/codex-compact` manual controls and safe Pi-native fallback. | `pi install npm:@narumitw/pi-codex-compact` |
-| [`pi-codex-imagegen`](./packages/pi-codex-imagegen) | Generate images through `/codex-imagegen` and a default-enabled Codex tool, without starting a Codex agent. | [Install from source](./packages/pi-codex-imagegen#-install) |
-| [`pi-context-management`](./packages/pi-context-management) | Opt into experimental summary-free context rollover with bounded branch-history recall and branch-local notes. | `pi install npm:@narumitw/pi-context-management` |
-| [`pi-edit-scope`](./packages/pi-edit-scope) | Restrict file edits to selected targets while keeping other files readable, with `/edit-scope`. | [Install from source](./packages/pi-edit-scope#-install) |
-| [`pi-file-context`](./packages/pi-file-context) | Browse project files, preview text, select exact lines or Git diff hunks, and attach immutable snapshots with Git provenance to the next prompt. Open it with configurable `Ctrl+Shift+X` or `/file-context`. | `pi install npm:@narumitw/pi-file-context` |
-| [`pi-lsp`](./packages/pi-lsp) | Language-server diagnostics and code actions across JavaScript, TypeScript, Python, Rust, Go, Ruby, C/C++, JVM, .NET, Swift, shell, infrastructure formats, and more. | `pi install npm:@narumitw/pi-lsp` |
-| [`pi-plan-mode`](./packages/pi-plan-mode) | Codex-like, read-only `/plan` collaboration before implementation begins. | `pi install npm:@narumitw/pi-plan-mode` |
-| [`pi-subagents`](./packages/pi-subagents) | Start bounded background Pi jobs with authenticated main-agent messaging. | [Install from source](./packages/pi-subagents#-install) |
+| Level | Included segments |
+| --- | --- |
+| **Minimal** | `model cwd branch context` |
+| **Balanced** (default) | `model thinking cwd branch tools context time` |
+| **Detailed** | `provider model thinking cwd branch tools context tokens cache cost time` |
+| **Custom** | Any other segment order, including explicit line breaks |
 
-### TypeSafe AI
+The `tools` segment takes no space while idle.
+`cache` takes no space when Pi has reported no cache reads or writes.
 
-These TypeSafe AI integrations are experimental and may change as they are evaluated in real workflows.
+## 💬 Commands
 
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-typesafe`](./packages/pi-typesafe) | Make typed Jev decisions with validated probabilities for yes-or-no, fixed-choice, and ordered-score questions. | `pi install npm:@narumitw/pi-typesafe` |
-| [`pi-typesafe-compact`](./packages/pi-typesafe-compact) | Use Jev to select older history before summarizing it with Pi's native compaction flow and active model. | `pi install npm:@narumitw/pi-typesafe-compact` |
-| [`pi-typesafe-search`](./packages/pi-typesafe-search) | Search workspace files with SQLite FTS5 and Jev semantic reranking, without embeddings or a vector database. | `pi install npm:@narumitw/pi-typesafe-search` |
+| Command | Purpose |
+| --- | --- |
+| `/statusline` | Customize footer appearance, information density, and layout. |
+| `/statusline settings` | Edit the settings JSON. |
+| `/statusline status` | Show effective settings, session cost source, and diagnostics. |
+| `/statusline help` | Show command and schema guidance. |
 
-### Task and workspace workflows
+The menu and editor require TUI; RPC receives notifications instead, including the manual settings path for `settings`.
+Status and help support TUI and RPC; print and JSON modes produce no command output.
+Unknown subcommands and trailing arguments are rejected.
+Palette previews save on Enter and revert on Escape, but layout changes save immediately and are not undone by closing the editor; see the [configuration guide](./docs/configuration.md).
 
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-btw`](./packages/pi-btw) | Ask a quick `/btw` side question without adding it to the main conversation. | `pi install npm:@narumitw/pi-btw` |
-| [`pi-caffeinate`](./packages/pi-caffeinate) | Prevent system sleep while Pi processes a long-running prompt. | `pi install npm:@narumitw/pi-caffeinate` |
-| [`pi-goal`](./packages/pi-goal) | Keep the agent working until a goal is verified complete; optionally enable an experimental ordered queue. | `pi install npm:@narumitw/pi-goal` |
-| [`pi-notes`](./packages/pi-notes) | Browse and edit global Markdown notes in an isolated embedded-agent workspace. | `pi install npm:@narumitw/pi-notes` |
-| [`pi-progress`](./packages/pi-progress) | Keep branch-aware multi-step work visible above the editor with the `update_progress` model tool. | `pi install npm:@narumitw/pi-progress` |
-| [`pi-worktree`](./packages/pi-worktree) | Create, switch, remove, and prune Git worktrees while carrying the Pi session into another workspace. | `pi install npm:@narumitw/pi-worktree` |
+## 📐 Runtime behavior
 
-Current Plan and Goal releases can coexist on the characterized Pi runtime through their anonymous cooperative workflow mutex.
-The deprecated combined `pi-workflow` package has no atomic Plan-to-Goal replacement; follow its [archived migration instructions](./deprecated/pi-workflow/README.md#-migration-from-pi-workflow).
+### Responsive fitting
 
-### Local collaboration
+Each row keeps its configured segment order.
+If it is too wide, pi-statusline removes the lowest-priority segment, recomputes the powerline transitions, and repeats until the row fits.
+Retention priority is highest to lowest:
 
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-chat`](./packages/pi-chat) | Join ephemeral peer-to-peer chat rooms that stay separate from Pi sessions, prompts, and model context. | `pi install npm:@narumitw/pi-chat` |
-| [`pi-fleet`](./packages/pi-fleet) | Start a separate Pi process in a terminal split and connect explicit local Pi sessions for bounded messages and one-turn requests. | `pi install npm:@narumitw/pi-fleet` |
-| [`pi-herdr`](./packages/pi-herdr) | Report Pi lifecycle state to Herdr and bundle safe Herdr terminal-orchestration guidance. | `pi install npm:@narumitw/pi-herdr` |
-
-### Accounts and data
-
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-accounts`](./packages/pi-accounts) | Switch named OpenAI Codex, Anthropic, GitHub Copilot, Kimi For Coding, OpenRouter, Radius, and xAI OAuth accounts with `/accounts`. | `pi install npm:@narumitw/pi-accounts` |
-| [`pi-dotenv`](./packages/pi-dotenv) | Load one explicit dotenv file early enough for provider credential discovery during normal Pi startup. | `pi install npm:@narumitw/pi-dotenv` |
-| [`pi-recall`](./packages/pi-recall) | Save selected text messages locally and preview or quote them across Pi sessions. | `pi install npm:@narumitw/pi-recall` |
-| [`pi-usage`](./packages/pi-usage) | View provider usage, limits, reset times, and API balances with `/usage`. | `pi install npm:@narumitw/pi-usage` |
-| [`pi-sync`](./packages/pi-sync) | Sync allowlisted Pi settings and optional sessions through Cloudflare R2 or S3-compatible storage. | `pi install npm:@narumitw/pi-sync` |
-
-### Status and observability
-
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-analytics`](./packages/pi-analytics) | Review private, content-free local metrics for model calls, skills, tools, response cycles, and observed provider reliability through `/analytics`. | `pi install npm:@narumitw/pi-analytics` |
-| [`pi-cache-hit-monitor`](./packages/pi-cache-hit-monitor) | Show live prompt-cache reuse, token, and estimated cost diagnostics above the editor. | `pi install npm:@narumitw/pi-cache-hit-monitor` |
-| [`pi-github-pr`](./packages/pi-github-pr) | Show current-branch pull request checks, reviews, and comment counts through the authenticated `gh` CLI. | `pi install npm:@narumitw/pi-github-pr` |
-| [`pi-inspect`](./packages/pi-inspect) | Inspect current session context and live tool calls in a private, read-only browser viewer with `/inspect`. | `pi install ./packages/pi-inspect` |
-| [`pi-langfuse`](./packages/pi-langfuse) | Send agent runs, generations, token usage, costs, and tool activity to Langfuse. | `pi install npm:@narumitw/pi-langfuse` |
-| [`pi-notify`](./packages/pi-notify) | Send Telegram reminders when Pi settles, with optional inactivity timing and computer/session/worktree details. | `pi install ./packages/pi-notify` |
-| [`pi-stamp`](./packages/pi-stamp) | Show configurable timestamps with opt-in assistant metadata, response timing, and tool timing in the TUI transcript. | `pi install npm:@narumitw/pi-stamp` |
-| [`pi-starship`](./packages/pi-starship) | Use a native Starship-style TOML footer with Pi-specific modules and no Starship binary dependency. | `pi install npm:@narumitw/pi-starship` |
-| [`pi-statusline`](./packages/pi-statusline) | Show model, tools, Git state, context usage, tokens, cost, and time in a preset or JSON-configured footer. | `pi install npm:@narumitw/pi-statusline` |
-| [`pi-tool`](./packages/pi-tool) | Browse every configured tool and inspect its active state, source, parameter schema, and prompt guidelines with `/tool`. | `pi install npm:@narumitw/pi-tool` |
-| [`pi-ticker`](./packages/pi-ticker) | Show configurable Yahoo Finance market quotes in a width-aware widget above the editor. | `pi install npm:@narumitw/pi-ticker` |
-
-Choose either `pi-starship` or `pi-statusline`; do not enable both footer extensions together.
-
-## 🧱 Extension libraries
-
-| Package | Use it for | Install |
-| --- | --- | --- |
-| [`pi-tui-kit`](./packages/pi-tui-kit) | Extend `@earendil-works/pi-tui` with reusable navigation helpers and declarative action, detail, settings, and multi-select flows. | `npm install @narumitw/pi-tui-kit` |
-
-Libraries are runtime dependencies for extension authors, not standalone Pi extensions. New standard
-manager menus should use `@narumitw/pi-tui-kit`; extensions continue to own domain state,
-commands, settings persistence, confirmations, and specialized UI.
-
-## 🔧 Advanced installation
-
-<details>
-<summary>Install this repository directly from GitHub</summary>
-
-Install the repository as one Pi package:
-
-```bash
-pi install git:github.com/narumiruna/pi-extensions
+```text
+context model branch tools cwd thinking cost provider cache tokens time turn brand
 ```
 
-The repository root Pi manifest explicitly lists every extension under `packages/`, so this enables all of them. Its install prepare step generates Kit runtime JavaScript and builds Inspector browser assets before hook setup, even when Pi omits development dependencies.
+Explicit `line_break` entries remain row boundaries.
+If the last remaining segment is itself wider than the row, that row renders empty rather than emitting an over-width line.
 
-To load only selected extensions, replace the installed package entry in `~/.pi/agent/settings.json` with a resource filter:
+### Directory, activity, Git, and PR state
+
+- `cwd` uses Starship's directory presentation defaults: contract the home directory to `~`, contract to the Git repository root when available, then retain at most the last three path components.
+  This changes display only; the configured segment list and Pi working directory are untouched.
+- Repository-root discovery is cached with Git status outside footer rendering; a failed root query falls back to home/path-component contraction without hiding the segment.
+- During active work, `tools` shows `⌨ waiting for <kind>`, `💭 thinking`, or `⚙️ <tool>` with parallel counts.
+- A sanitized prompt title follows the prompt kind when available.
+- Prompt waiting takes precedence without losing the underlying tool or streaming state, which returns when the prompt closes.
+- Activity disappears after the agent settles and resets across session replacement or shutdown.
+- Clean repositories show no Git counters.
+- Dirty counters are `⇡` ahead, `⇣` behind, `+` staged, `~` modified/deleted, `?` untracked, and `!`
+  conflicts.
+- A linked or plain GitHub PR reference appears with the branch when possible, avoiding a duplicate extension status.
+- Context color changes to warning at 70% and error at 90%.
+- Git state is cached outside footer rendering and stale session results are ignored.
+
+### Usage and context
+
+- `context` renders one-decimal current usage and the model window, such as `2.4%/272k`.
+  After compaction it can temporarily render `?/272k` until the next valid assistant response.
+- `tokens`, `cache`, and `cost` total every usage-bearing session entry, matching Pi's native footer.
+  This includes assistant messages, nested-LLM tool results, compactions, branch summaries, and persisted cache-warming usage, including abandoned branches retained in the session.
+- Cache tokens are `R<read>`, `W<write>`, and `CH<rate>`.
+  `R` and `W` are cumulative; `CH` uses only the latest assistant prompt: `cacheRead / (input + cacheRead + cacheWrite) * 100`.
+- `/statusline status` labels session cost as `provider-reported` only for a nonempty, finite total when every included usage record has a finite nonnegative `cost.total` and `cost.totalFromProvider === true`.
+  Catalog estimates, mixed provenance, older sessions, empty sessions, and missing totals are `unconfirmed`; records without usage do not contribute.
+- The footer keeps its current cost format and sums Pi's best available `cost.total`, not catalog-estimated components.
+  Components can differ from a provider total and do not establish exact prompt-cache savings.
+  Session-response costs are separate from account/key quotas and balances.
+- Subscription-backed OAuth models and `kimi-coding` append `(sub)` to cost.
+  The dollar value is usage cost, not proof of an amount billed under a subscription.
+- Pi's public extension API does not expose the current auto-compaction toggle, so this footer cannot reliably show the native `(auto)` marker.
+
+## ⚙️ Settings
+
+Use `/statusline` for appearance and information presets, or **Advanced → Edit settings JSON** (`/statusline settings`) for a custom document.
+The only settings file is `<getAgentDir()>/pi-statusline.json`; there are no project or environment overrides.
+
+A minimal customization selects a palette and a few segments:
 
 ```json
 {
-  "packages": [
-    {
-      "source": "git:github.com/narumiruna/pi-extensions",
-      "extensions": [
-        "packages/pi-accounts/src/index.ts",
-        "packages/pi-usage/src/index.ts"
-      ]
-    }
-  ]
+  "palettePreset": "ocean",
+  "segments": ["model", "cwd", "branch", "context"]
 }
 ```
 
-Filters use resource paths relative to the repository root. A package directory such as `packages/pi-accounts` is not enough; select its `src/index.ts` entrypoint.
+A missing file uses the balanced built-in footer without creating the file or its parent directory.
+The first successful save creates an editable document atomically.
+Menu saves preserve unknown fields; invalid recognized values block saving and keep the live footer unchanged.
+Malformed or unreadable files are never overwritten.
+Manual edits load at startup, `/reload`, or session replacement.
 
-Restart Pi or run `/reload` after changing the filter. Update the checkout later with:
+Appearance previews save only on Enter, while Escape restores the saved palette.
+Custom-layout changes save immediately, so closing that screen does not undo them.
 
-```bash
-pi update --extensions
-```
+Read the [configuration reference](./docs/configuration.md) for all settings, palettes, model truncation, multiline layouts, effective layout controls, extension-status icon precedence, and legacy-file handling.
 
-</details>
+## 🚧 Limitations
 
-## 🧑‍💻 Local development
+- The footer needs Powerline glyphs and emoji for its intended appearance.
+- Pi does not arbitrate footer ownership, so another footer extension can replace pi-statusline.
+- Custom layouts support ordered segments and line breaks, not a variable or format language.
 
-Use Node.js from [`.node-version`](./.node-version) with its bundled npm, then run from the repository root:
+## 🛠️ Troubleshooting
 
-```bash
-node scripts/check-install-policy.mjs
-npm install
-npm test
-npm run check
-```
+- **Powerline symbols look wrong:** use a font with Powerline glyphs and emoji support.
+- **The footer reports settings warnings:** run `/statusline status`, then `/statusline settings` to fix invalid recognized fields.
+- **The footer appears to be replaced:** disable `pi-starship` or another extension that also calls Pi's `setFooter()`.
+- **A custom segment disappears on a narrow terminal:** check the responsive priority above or add an explicit `line_break`.
 
-`npm test` typechecks the test sources and runs the root and workspace suites with Vitest.
-See [test performance and isolation](./docs/test-performance.md) for package timing reports,
-cache behavior, and the reviewed shared-module test boundary.
-CI and release use `npm ci` with strict dependency script review and a three-day minimum age for new resolution.
-See [dependency installation policy](./docs/dependency-installation.md) for script approvals, lockfile-age limitations,
-failed-update recovery, urgent-patch review, and toolchain upgrades.
-
-Build generated entries before loading local packages, and use the generic npm pack workflow with an unscoped package name:
-
-```bash
-npm --workspace @narumitw/pi-goal run build --if-present
-pi -e ./packages/pi-goal
-npm run package:pack -- goal
-
-# Another build-backed package uses the same local flow and pack workflow
-npm --workspace @narumitw/pi-file-context run build --if-present
-pi -e ./packages/pi-file-context
-npm run package:pack -- file-context
-
-# Libraries use the same generic pack workflow
-npm run package:pack -- tui-kit
-```
-
-Run `npm run` to see all development, install, pack, and release workflows.
-Pull requests that change published package behavior should add release intent with `npm run changeset`.
-Packages version independently.
-
-<details>
-<summary>Publishing a new scoped package</summary>
-
-`npm run package:public -- @narumitw/pi-new-extension` only changes visibility for an existing npm package.
-If npm returns 404 for a brand-new package, publish it once with public access:
-
-```bash
-npm publish --workspace @narumitw/pi-new-extension --access public
-```
-
-After the initial publication, Changesets handles extensions and libraries through independent package versions.
-
-</details>
-
-## 🦋 Releases
-
-A behavior-changing package pull request records its affected packages and SemVer bumps with:
-
-```bash
-npm run changeset
-```
-
-After changesets reach `main`, the release workflow creates or updates one version pull request. That
-pull request changes only selected package versions, dependency ranges where configured, changelogs,
-and the lockfile. Merging it publishes the new versions with npm provenance and creates
-package-specific tags and GitHub releases such as `@narumitw/pi-goal@0.50.0`.
-
-Repository-only documentation, tests, tooling, and path migrations may omit a changeset. Use
-`npm run changeset:status` to inspect pending releases. Versioning and publication run through the
-release workflow; initial publication remains the manually approved exception described above.
-
-`@narumitw/pi-tui-kit` remains independently versioned. Publish a new Kit API before raising an
-extension's compatibility floor to consume it; do not release an unpublished Kit API and its first
-consumer together.
-
-## 🗂️ Repository structure
+## 🗂️ Package layout
 
 ```text
-packages/                Extension packages and reusable libraries
-deprecated/              Reference packages excluded from active workspace scripts
-docs/                    Repository conventions and plans
-scripts/                 Shared checks, tests, versioning, and release helpers
-test/                    Root integration and repository tests
+packages/pi-statusline/
+├── src/                               # Authoritative implementation and helpers
+│   ├── index.ts                       # Thin Pi entrypoint
+│   └── statusline.ts                  # Responsive footer lifecycle
+├── dist/                              # Generated Jiti runtime
+├── scripts/build-runtime.mjs          # Runtime builder
+├── docs/                              # Published reference documentation
+└── test/                              # Behavior and lifecycle coverage
 ```
 
-Each active package contains its own `package.json`, `README.md`, `LICENSE`, `tsconfig.json`, and TypeScript source under `src/`.
-Every extension keeps a thin `src/index.ts` source forwarder and declares one package entrypoint.
-An extension package may load that source entrypoint directly or publish a build-backed `dist/index.ts` bundle for Pi's Jiti runtime.
-Reusable libraries publish built ESM and declarations from `dist/`.
+The generated runtime is built from `src/index.ts` and does not import back into `src`.
 
-<details>
-<summary>Deprecated packages</summary>
+## 🔎 Keywords
 
-The following packages remain available as source references but are excluded from active workspace scripts:
-
-- `pi-codex-accounts` — replaced by [`pi-accounts`](./packages/pi-accounts)
-- [`pi-cbmem`](./deprecated/pi-cbmem) — deprecated without a replacement because a simple benchmark found insufficient benefit and substantially higher token usage
-- [`pi-chrome-devtools`](./deprecated/pi-chrome-devtools) — replaced by Chrome DevTools MCP through Pi's native MCP support; review the [migration instructions and compatibility differences](./deprecated/pi-chrome-devtools/README.md#-migration-to-native-mcp)
-- [`pi-firecrawl`](./deprecated/pi-firecrawl) — replaced by Firecrawl MCP through Pi's native MCP support; follow the [migration instructions](./deprecated/pi-firecrawl/README.md#-migration-to-native-mcp)
-- `pi-retry` — replaced by Pi's built-in provider retry and timeout behavior
-- `pi-google-genai` — replaced by the `grounding-with-google-genai` agent skill
-- `pi-image-drop` — deprecated without a replacement
-- [`pi-workflow`](./deprecated/pi-workflow) — replaced by focused Plan and Goal products; atomic Plan-to-Goal handoff has [no replacement](./deprecated/pi-workflow/README.md#-migration-from-pi-workflow)
-- `pi-jupyter` — deprecated without a replacement
-- `pi-webui` — deprecated without a replacement
-- `pi-sidebar`
-- `pi-telegraph`
-- `pi-wait-what`
-
-</details>
+Pi extension, Pi coding agent, statusline, Tokyo Night, powerline, responsive terminal footer, context usage, prompt cache, cache hit rate, model status.
 
 ## 📄 License
 
-MIT. See [`LICENSE`](./LICENSE).
+MIT.
+See [`LICENSE`](./LICENSE).
