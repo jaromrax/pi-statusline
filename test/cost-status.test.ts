@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
 import { registerStatuslineCommand } from "../src/commands.js";
 import { loadStatuslineSettings } from "../src/settings.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 function assistant(total: number, totalFromProvider?: boolean) {
   return {

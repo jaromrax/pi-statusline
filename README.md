@@ -37,14 +37,14 @@ Try the published package without installing it permanently:
 pi -e npm:@narumitw/pi-statusline
 ```
 
-Build the generated runtime and try the local package from this repository:
+Try the local package from this repository (loads `src/index.ts` directly, no build needed):
 
 ```bash
-npm --workspace @narumitw/pi-statusline run build
-pi -e ./packages/pi-statusline
+npm install
+pi -e .
 ```
 
-The package declares `dist/index.ts`, so build an unbuilt local checkout before Pi loads the package directory.
+Validate with `npm test` and `npm run check`. The optional `npm run build` generates the split runtime in `dist/` used for npm publishing.
 Install only from sources you trust because Pi extensions run with Pi's permissions.
 
 ## 🚀 Quick start
@@ -187,7 +187,7 @@ Read the [configuration reference](./docs/configuration.md) for all settings, pa
 ## 🗂️ Package layout
 
 ```text
-packages/pi-statusline/
+.
 ├── src/                               # Authoritative implementation and helpers
 │   ├── index.ts                       # Thin Pi entrypoint
 │   └── statusline.ts                  # Responsive footer lifecycle

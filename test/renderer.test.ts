@@ -3,7 +3,6 @@ import { sep } from "node:path";
 import type { ReadonlyFooterDataProvider, Theme } from "@earendil-works/pi-coding-agent";
 import { visibleWidth } from "@earendil-works/pi-tui";
 import { test } from "vitest";
-import { createMockContext } from "../../../test/support.js";
 import { powerlineExtensionSeparator, renderPowerlineStatusline } from "../src/powerline.js";
 import {
   formatConfiguredSegment,
@@ -14,6 +13,7 @@ import {
 } from "../src/render.js";
 import { createDefaultConfig, normalizeStatuslineConfig } from "../src/settings.js";
 import type { RenderItem, RenderSegment, SegmentName } from "../src/types.js";
+import { createMockContext } from "./support.js";
 
 const ESCAPE = String.fromCharCode(27);
 const ANSI_PATTERN = new RegExp(`${ESCAPE}\\[[0-9;]*m`, "gu");

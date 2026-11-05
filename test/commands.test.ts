@@ -9,7 +9,6 @@ import { initTheme, type KeybindingsManager } from "@earendil-works/pi-coding-ag
 import { type Component, getKeybindings, visibleWidth } from "@earendil-works/pi-tui";
 import { createTuiHarness } from "@narumitw/pi-tui-kit/testing";
 import { describe, test } from "vitest";
-import { createCustomSelectorHarness, createMockContext, createMockPi } from "../../../test/support.js";
 import { registerStatuslineCommand } from "../src/commands.js";
 import {
   DEFAULT_STATUSLINE_DOCUMENT,
@@ -18,6 +17,7 @@ import {
   saveStatuslineSettingsDocument,
   settingsFilePath,
 } from "../src/settings.js";
+import { createCustomSelectorHarness, createMockContext, createMockPi } from "./support.js";
 
 initTheme("dark", false);
 

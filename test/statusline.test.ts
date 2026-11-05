@@ -14,7 +14,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { getCapabilities, setCapabilities, visibleWidth } from "@earendil-works/pi-tui";
 import { afterAll, test } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
 import { consumeStatuslineSettingsNotice } from "../src/settings.js";
 import type { ExtensionStatusIconAliasMap } from "../src/statusline.js";
 import statusline, {
@@ -39,6 +38,7 @@ import statusline, {
   stripExtensionStatusPrefix,
   wrapExtensionStatusline,
 } from "../src/statusline.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 const EMPTY_STATUS_ALIASES: ExtensionStatusIconAliasMap = new Map();
 void EMPTY_STATUS_ALIASES;

@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExecResult, ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterAll, test, vi } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 const directory = mkdtempSync(join(tmpdir(), "statusline-bounded-git-"));
 vi.stubEnv("PI_CODING_AGENT_DIR", directory);

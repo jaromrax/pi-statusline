@@ -4,8 +4,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { visibleWidth } from "@earendil-works/pi-tui";
 import { afterAll, test } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
 import statusline from "../src/statusline.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 const suiteAgentDir = mkdtempSync(join(tmpdir(), "pi-statusline-responsive-"));
 const previousSuiteAgentDir = process.env.PI_CODING_AGENT_DIR;

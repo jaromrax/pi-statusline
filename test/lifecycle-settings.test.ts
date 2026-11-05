@@ -4,8 +4,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { getCapabilities, getKeybindings, setCapabilities } from "@earendil-works/pi-tui";
 import { test } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
 import statusline from "../src/statusline.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 async function emit(
   events: ReadonlyMap<string, Array<(...args: unknown[]) => unknown>>,

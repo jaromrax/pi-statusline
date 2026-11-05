@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterAll, expect, test, vi } from "vitest";
-import { createMockContext, createMockPi } from "../../../test/support.js";
+import { createMockContext, createMockPi } from "./support.js";
 
 const directory = mkdtempSync(join(tmpdir(), "statusline-passive-timers-"));
 vi.stubEnv("PI_CODING_AGENT_DIR", directory);

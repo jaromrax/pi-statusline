@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import type { ExecOptions, ExecResult, ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { test } from "vitest";
-import { createMockPi } from "../../../test/support.js";
 import { readGitStatus } from "../src/git-status.js";
+import { createMockPi } from "./support.js";
 
 const completeStatus = "## main...origin/main [ahead 2, behind 1]\n M changed.ts\n";
 const summary = { ahead: 2, behind: 1, staged: 0, modified: 1, untracked: 0, conflicts: 0 };

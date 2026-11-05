@@ -22,11 +22,12 @@
   ],
   "pi": {
     "extensions": [
-      "./dist/index.ts"
+      "./src/index.ts"
     ]
   },
   "scripts": {
     "build": "node scripts/build-runtime.mjs",
+    "test": "vitest run --dir=test",
     "check": "npm run build && biome check --vcs-use-ignore-file=false src test scripts package.json tsconfig.json README.md && npm run typecheck",
     "format": "biome check --write --vcs-use-ignore-file=false src test scripts package.json tsconfig.json README.md",
     "prepack": "npm run build",
@@ -37,16 +38,17 @@
     "@earendil-works/pi-tui": "*"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.6.3",
     "@earendil-works/pi-coding-agent": "1.5.0",
     "@earendil-works/pi-tui": "1.5.0",
     "@types/node": "26.6.5",
     "esbuild": "0.28.2",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vitest": "^5.0.5"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/narumiruna/pi-extensions",
-    "directory": "packages/pi-statusline"
+    "url": "https://github.com/jaromrax/pi-statusline"
   },
   "dependencies": {
     "@narumitw/pi-tui-kit": "^0.69.0"

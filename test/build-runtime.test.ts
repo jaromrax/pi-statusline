@@ -4,7 +4,7 @@ import { SourceMap } from "node:module";
 import { join } from "node:path";
 import { DefaultResourceLoader, SettingsManager } from "@earendil-works/pi-coding-agent";
 import { test } from "vitest";
-import { registerRuntimeBuilderContract } from "../../../test/runtime-builder-contract.js";
+import { registerRuntimeBuilderContract } from "./runtime-builder-contract.js";
 
 const { packageRoot, loadBuilder } = registerRuntimeBuilderContract({
   packageId: "pi-statusline",

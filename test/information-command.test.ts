@@ -4,9 +4,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { visibleWidth } from "@earendil-works/pi-tui";
 import { test } from "vitest";
-import { createCustomSelectorHarness, createMockContext, createMockPi } from "../../../test/support.js";
 import { registerStatuslineCommand } from "../src/commands.js";
 import { loadStatuslineSettings, settingsFilePath } from "../src/settings.js";
+import { createCustomSelectorHarness, createMockContext, createMockPi } from "./support.js";
 
 function informationChoice(
   getInputs: () => readonly string[],
